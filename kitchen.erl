@@ -44,3 +44,22 @@ take(Pid, Food) ->
 start(FoodList) ->
     spawn(?MODULE, fridge2, [FoodList]).
 
+store2(Pid, Food) ->
+    Pid ! {self(), {store, Food}},
+    receive
+        {Pid, Msg} -> Msg
+    after 3000 ->
+        timeout
+    end.
+
+take2(Pid, Food) ->
+    Pid ! {self(), {take, Food}},
+    receive
+        {Pid, Msg} -> Msg
+    after 3000 ->
+        timeout
+    end.
+
+
+
+
